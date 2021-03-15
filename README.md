@@ -75,11 +75,22 @@ Hyperspace serves its RPC interface over a UNIX domain socket on Linux/OSX
 ## hyperdrive
 As with Hypercores, a Hyperdrive can only have a single writer on a single machine; the creator of the Hyperdrive is the only person who can modify to it, because they're the only one with the private key. That said, the writer can replicate to many readers, in a manner similar to BitTorrent.
 
+it uses two hypercores: one for storing the file metadata and another for storing the file content.
+
+Hyperdrives are file archives which mimic the posix interface
+
+
+
 ## hyperbee
+https://hypercore-protocol.org/guides/walkthroughs/p2p-indexing-with-hyperbee/
+
+Hyperbee is a key-value store
+
 Hyperbee is an append-only B-Tree that can be used to build P2P databases. 
 
+Much of Hyperbee's API mirrors the LevelUP interface
 
-
+As with Hypercores, a Hyperbee can only have a single writer on a single machine; the creator of the Hyperdrive is the only person who can modify to it, because they're the only one with the private key.
 
 
 
