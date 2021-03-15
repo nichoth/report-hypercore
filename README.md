@@ -62,6 +62,23 @@ It is an append-only log.
 
 the creator of the Hypercore is the only person who can modify it, because they're the only one with the private key.
 
+Easy Replication: The replicate method returns a Duplex stream that can be piped over an arbitrary transport stream.
+
+We pass a key parameter into the constructor to indicate that we're loading an existing hypercore rather than creating a new one
+
+> Since the public key is also a read capability, it can't be used to discover other readers (by advertising it on a DHT, for example) as that would lead to capability leaks. The discovery key, being derived from the public key but lacking read capability, can be shared openly for peer discovery.
+
+The replicate method can be used to create a Duplex stream that implements the Hypercore Wire Protocol. We can pipe together two replication streams, one from the original core and one from the clone, in order to start exchanging blocks:
+
+```js
+const firstStream = core.replicate(true, { live: true })
+const cloneStream = clone.replicate(false, { live: true })
+
+// Pipe the stream together to begin replicating.
+firstStream.pipe(cloneStream).pipe(firstStream)
+```
+
+
 ---------------------
 
 ## hyperspace
@@ -73,6 +90,11 @@ Hyperspace serves its RPC interface over a UNIX domain socket on Linux/OSX
 
 
 ## hyperdrive
+
+https://github.com/hypercore-protocol/walkthroughs/blob/main/hyperdrive/step-1b.js
+
+https://hypercore-protocol.org/guides/walkthroughs/sharing-files-with-hyperdrive/
+
 As with Hypercores, a Hyperdrive can only have a single writer on a single machine; the creator of the Hyperdrive is the only person who can modify to it, because they're the only one with the private key. That said, the writer can replicate to many readers, in a manner similar to BitTorrent.
 
 it uses two hypercores: one for storing the file metadata and another for storing the file content.
