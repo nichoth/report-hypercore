@@ -5,6 +5,8 @@ const createHyperspaceSimulator = require('hyperspace/simulator')
 
 // https://github.com/hypercore-protocol/walkthroughs/blob/main/hyperdrive/step-1b.js
 
+// https://hypercore-protocol.org/guides/walkthroughs/sharing-files-with-hyperdrive/
+
 // get or create drive at given path
 // const drive = new Hyperdrive('./storage-path')
 
